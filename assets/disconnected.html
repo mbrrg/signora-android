@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <link href="http://fonts.googleapis.com/css?family=Covered+By+Your+Grace" rel="stylesheet" type="text/css">
+  <style style="text/css">
+	* {
+	    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
+	} 
+  
+    body
+    {
+      background-color: black;      
+    }
+    
+    #logo
+    {
+      height: 10%;
+      bottom: 0px;
+      right: 0px;
+      padding-right: 5%;
+      padding-bottom: 5%;
+      width: 30%;
+      position: absolute;            
+      font-family: "Covered By Your Grace", cursive;
+      font-size: 100%;
+      color: #666;
+      text-align: right;
+    }
+  </style>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script>
+    (function( $ ){
+      $.fn.fitText = function( kompressor, options ) {
+
+        // Setup options
+        var compressor = kompressor || 1,
+            settings = $.extend({
+              "minFontSize" : Number.NEGATIVE_INFINITY,
+              "maxFontSize" : Number.POSITIVE_INFINITY
+            }, options);
+
+        return this.each(function(){
+
+          // Store the object
+          var $this = $(this);
+
+          // Resizer() resizes items based on the object width divided by the compressor * 10
+          var resizer = function () {
+            $this.css("font-size", Math.max(Math.min($this.width() / (compressor*10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
+          };
+
+          // Call once to set.
+          resizer();
+
+          // Call on resize. Opera debounces their resize by default.
+          $(window).on("resize.fittext orientationchange.fittext", resizer);
+        });
+      };
+    })( jQuery );
+    
+     $(document).ready(function() {
+        $("#logo").fitText();
+        $("#logo").click(function() {
+        	Signora.showSettings();
+    	});
+     });
+  </script>
+</head>
+<body>
+  <div id="logo">
+    Signora
+  </div>
+</body>
+</html>
